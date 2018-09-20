@@ -115,7 +115,7 @@ func (c *Consumer) handleMessages(pc sc.PartitionConsumer) {
 				seppukuCounter.Inc(1)
 				buf := make([]byte, 1<<20)
 				stacklen := runtime.Stack(buf, true)
-				c.logger.Panic("No messages processed in the last minute", zap.Any("stack", buf[:stacklen]))
+				c.logger.Panic("No messages processed in the last minute", zap.String("stack", string(buf[:stacklen])))
 				os.Exit(1)
 			} else {
 				atomic.StoreUint64(&msgConsumed, 0)
